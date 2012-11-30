@@ -21,6 +21,9 @@ def model_loop(model_dir):
 
 filenames = ['vp']
 
+# link true model for comparison
+os.system('ln -s ../../models/true_model .')
+
 model_dirs=['true_model/']
 for i in range(20):
     model_dirs.append('m'+str(i)+'/')

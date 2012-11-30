@@ -60,3 +60,4 @@ def copy_Database_files(output_dir):
     import os, directory_parameters
     print "Copying Database files from " + directory_parameters.DATABASES_MPI_path + " to " + output_dir
     os.system('cp ' + directory_parameters.DATABASES_MPI_path+'*Database ' + output_dir)
+

@@ -23,6 +23,7 @@ cd ../
 
 # Performs acoustic FWI with initial model from above
 # L2 misfit is applied
+# steepest descent with constant step length is taken
 # Inverts only for Vp (vs=0, rho is assumed known)
 cd inversion
 python driver_inversion.py

@@ -4,9 +4,7 @@ from glob import glob
 import array
 import sys
 import pprocess
-#from mpl_toolkits.mplot3d import Axes3D
-#from matplotlib import cm
-#import scipy.io
+import os
 
 def read_bin_file(filename, data_types):
     num_objects = len(data_types)
@@ -26,18 +24,18 @@ def read_bin_file(filename, data_types):
     return file_out
 
 def get_plotpoints(p):
-    x=read_bin_file(xfiles[p],['d'])[0]
-    x=np.array(x,dtype='d')
-    y=read_bin_file(yfiles[p],['d'])[0]
-    y=np.array(y,dtype='d')
-    if not(min(x)<x_coord<max(x)) or not(min(y)<y_coord<max(y)):
+    x=read_bin_file(xfiles[p],['f'])[0]
+    x=np.array(x,dtype='f')
+    y=read_bin_file(yfiles[p],['f'])[0]
+    y=np.array(y,dtype='f')
+    if not(min(x)-tol<x_coord<max(x)+tol) or not(min(y)-tol<y_coord<max(y)+tol):
         return []
     I=[]
     for gp in range(len(x)):
         if abs(x[gp]-x_coord)<tol and abs(y[gp]-y_coord)<tol:
             I.append(gp)
-    z=read_bin_file(zfiles[p],['d'])[0]
-    z=np.array(z,dtype='d')
+    z=read_bin_file(zfiles[p],['f'])[0]
+    z=np.array(z,dtype='f')
     model=read_bin_file(modelfiles[p],['f'])[0]
     model=np.array(model,dtype='f')
     return model[I],z[I],x[I],y[I]
@@ -51,7 +49,7 @@ y_coord = 500.0
 # threshold to consider when searching for (x,y) points near (x_coord,y_coord)
 tol=1.0
 
-db_dir='OUTPUT_FILES/DATABASES_MPI/'
+db_dir='../OUTPUT_FILES/DATABASES_MPI/'
 xfiles=glob(db_dir+'*xlocal*')
 yfiles=glob(db_dir+'*ylocal*')
 zfiles=glob(db_dir+'*zlocal*')
@@ -62,7 +60,8 @@ NPROC = len(xfiles)
 
 ll=[]
 models_toplot=['true_model']
-for mm in [0,3,6,9,13,16,19]: model_dirs.append('m'+str(mm))
+for mm in [0,3,6,9,10]:
+    models_toplot.append('m'+str(mm))
 
 for model_dir in models_toplot:
     modelfiles = glob(model_dir+'/*'+modeltype+'.bin')

@@ -14,13 +14,15 @@ functions_inversion.setup_event_scratch_directory()
 functions_inversion.setup_SEM_list()
 functions_inversion.create_STATIONS_ADJOINT()
 
-for iteration in range(20):
+
+for iteration in range(10):
     current_model_directory = os.getcwd()+'/models_inversion/m'+str(iteration)+'/'
 
     # Generate proc*external_mesh.bin files for current model
     # We This assumes that only the vp-model is changing (vs, rho are fixed at initial model)
     # Par_file has been modified so that input model is read from vp/rho/vs binary files ("MODEL = gll")
     functions_inversion.generate_external_mesh_dot_bin(current_model_directory)
+    if iteration==0: functions_inversion.write_grid_gll() # schiemenz, not elegant
     
     print "Doing forward simulations"
     save_forward=True

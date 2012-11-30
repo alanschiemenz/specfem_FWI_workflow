@@ -1,7 +1,7 @@
 def initialize_folder():
     import directory_parameters, input_parameters, os
     print "Initializing folder"
-    for fname in ['bin','MESH','linked_data','linked_CMTSOLUTION_files',directory_parameters.in_data_files_path,directory_parameters.OUTPUT_FILES_path,directory_parameters.DATABASES_MPI_path,input_parameters.event_scratch_directory,'L2_misfit','models_inversion']:
+    for fname in ['bin','MESH','linked_data','linked_CMTSOLUTION_files',directory_parameters.in_data_files_path,directory_parameters.OUTPUT_FILES_path,directory_parameters.DATABASES_MPI_path,input_parameters.event_scratch_directory,'L2_misfit','models_inversion','initial_model']:
         print "Removing " + fname
         os.system('rm -rf ' + fname)
 
@@ -22,7 +22,7 @@ def link_setup():
         os.system('ln -s ' + input_parameters.CMTSOLUTION_path + 'event'+str(enum) + ' .')
         os.chdir('../')
     print "Linking initial model files and (constant) vs, rho, Database files"
-    os.system('ln -s ../models_inversion/initial_model . ')
+    os.system('ln -s ../models/initial_model . ')
     os.system('mkdir -p ' + directory_parameters.OUTPUT_FILES_path)
     os.system('mkdir -p ' + directory_parameters.DATABASES_MPI_path)
     for fname in ['vs.bin','rho.bin','Database']:
@@ -150,7 +150,7 @@ def setup_in_data_files():
     os.chdir(directory_parameters.in_data_files_path)
     # set options in Par_file
     os.system('python set_Par_file_option.py MODEL gll')
-    os.system('python set_Par_file_option.py SAVE_MESH_FILES false')
+    os.system('python set_Par_file_option.py SAVE_MESH_FILES true')
     os.chdir(root_dir)
 
 
@@ -321,7 +321,7 @@ def sum_smooth_kernels(iteration):
             kernel_fname = input_parameters.summed_kernel_directory+'/'+proc_prefix+kerneltype+'.bin'            
             kernelvalues = read_bin_file(kernel_fname,['f'])[0]
             kernelvalues = np.array(kernelvalues,dtype='f')
-            zlocal = read_bin_file(directory_parameters.DATABASES_MPI_path+proc_prefix+'zlocal.bin',['d'])[0]
+            zlocal = read_bin_file(directory_parameters.DATABASES_MPI_path+proc_prefix+'zlocal.bin',['f'])[0]
             for gp in range(len(zlocal)):
                 if (zlocal[gp] > input_parameters.zero_line):
                     kernelvalues[gp] = 0.0
@@ -392,31 +392,27 @@ def update_model(iteration,model_in_dir,model_out_dir,kerneltype,modeltype):#,up
         parfun(proc,max_kernel_value)
     results.finish()
 
-def write_model_misfit():
-    import array
-    import input_parameters
+def write_grid_gll():
+    # specfem mesh files (e.g. proc000000_x.bin) are defined on global coordinates
+    # however, we need them defined local (GLL) points
+    # thus, we output files of type proc000000_<xlocal/ylocal/zlocal>.bin, the entries of which correspond to the spatial location of the model files (e.g. proc000000_vp.bin)
+    import directory_parameters, input_parameters, pprocess
     import numpy as np
-    from glob import glob
-    import os
+    def global_to_local(proc,coord):
+        proc_prefix = get_proc_prefix(proc)
+        # load proc*_<coord>.bin file
+        global_coord = read_bin_file(directory_parameters.DATABASES_MPI_path + proc_prefix + coord + '.bin',['f'])[0]
+        # load local to global mapping, proc*_ibool.bin
+        ibool = read_bin_file(directory_parameters.DATABASES_MPI_path + proc_prefix + 'ibool.bin',['i'])[0]
+        local_coord = np.zeros(len(ibool))
+        for i in range(len(ibool)):
+            local_coord[i] = global_coord[ibool[i]-1] # python arrays start at 0, whereas ibool starts at 1
+        filename_out = directory_parameters.DATABASES_MPI_path + proc_prefix + coord + 'local.bin'
+        write_bin_file(filename_out,[local_coord.tolist()],['f'],1)
 
-    it = num_models(copy_flag=False)-1
-    exact_model_files = glob('EXACT_MODEL/*vp.bin')
-    exact_model_files.sort()
-    model_files = glob('models_inversion/m'+str(it)+'/*vp.bin')
-    model_files.sort()
-    mmisfit = 0.0
+    results = pprocess.Map(limit=input_parameters.total_processors,reuse=1)
+    parfun = results.manage(pprocess.MakeReusable(global_to_local))
     for proc in range(input_parameters.NPROCS):
-        u1=read_bin_file(exact_model_files[proc],['f'])[0]
-        u2=read_bin_file(model_files[proc],['f'])[0]
-        mmisfit += np.sum(np.abs(np.array(u1)-np.array(u2)))        
-    if ((it == 0) or (os.path.isfile('model_misfit')==False)):
-        modelmisfit = open('model_misfit','w')
-        modelmisfit.write("%f 1.0 0\n" % (mmisfit))
-        modelmisfit.close()
-    else:
-        mtemp = open('model_misfit','r')
-        mmisfit_initial = np.float(mtemp.readline().split()[0])
-        mtemp.close()
-        modelmisfit = open('model_misfit','a')
-        modelmisfit.write("%f %f %i\n" % (mmisfit,mmisfit/mmisfit_initial,it))
-        modelmisfit.close()
+        for coord in ['x','y','z']:
+            parfun(proc,coord)
+    results.finish()

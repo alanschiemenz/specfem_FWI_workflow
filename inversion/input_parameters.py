@@ -4,7 +4,7 @@ NPROCS=4 # number of processors used in 1 SPECFEM3D solve
 total_processors = 36 # total number of processors available 
 
 number_of_events=len(glob('../input_files/CMTSOLUTION_files/*'))
-zero_line = -199.0 # kernels are zeroed-out for z > zero_line (i.e. no model update there)
+zero_line = -1.0 # kernels are zeroed-out for z > zero_line (i.e. no model update there)
 
 # Where the exact-model data is stored
 data_path = '/export/data/schiemenz/workflow_examples/toy_cube/generate_data/true_model_seismograms/'
