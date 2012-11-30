@@ -1,0 +1,27 @@
+SHORT INSTRUCTIONS (assumes you're running on 4 processors)
+
+1. Link all SPECFEM3D binaries from your local installation into folder ./binary_files/, e.g.:
+
+$ ln -s ~/SPECFEM3D/bin/* binary_files/
+
+The workflow is compiled to work on the most recent svn version of the code without any modifications.  The programs that are needed are: 
+xspecfem3D 
+xdecompose_mesh_SCOTCH 
+xgenerate_databases 
+xcombine_vol_data
+
+2. Change the values of the following variables (default values shown), defined in ./inversion/input_parameters.py:
+
+data_path = '/export/data/schiemenz/workflow_examples/toy_cube/generate_data/true_model_seismograms/'
+CMTSOLUTION_path = '/export/data/schiemenz/workflow_examples/toy_cube/input_files/CMTSOLUTION_files/'
+event_scratch_directory='/export/data/schiemenz/workflow_examples/toy_cube/inversion/event_scratch_directory/'
+
+... in general, you need only replace the part
+/export/data/schiemenz/workflow_examples/toy_cube/
+
+to wherever the workflow has been locally installed
+
+3. run the script 
+$ ./do_everything.sh
+
+
