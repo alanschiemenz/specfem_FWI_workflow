@@ -1,0 +1,96 @@
+Fri Nov 30 11:23:21 CET 2012
+Writing STATIONS file: 
+
+Output 100 receivers to STATIONS file
+
+Setting parameter MODEL to value default
+Setting parameter SAVE_MESH_FILES to value .true.
+ total number of nodes: 
+   nnodes =         1573
+ total number of spectral elements:
+   nspec =         1200
+ materials:
+   num_mat =            1
+   num_mat =           -1
+   defined =            1 undefined =            1
+ absorbing boundaries:
+   nspec2D_xmin =          120
+   nspec2D_xmax =          120
+   nspec2D_ymin =          120
+   nspec2D_ymax =          120
+   nspec2D_bottom =          100
+   nspec2D_top =          100
+ node valence:
+   min =            1  max =            8
+   nsize =            8 sup_neighbour =           38
+ mesh2dual:
+   max_neighbour =           26
+   moho elements =            0
+ partitions: 
+   num =            4
+ 
+ Databases files in directory: ./OUTPUT_FILES/DATABASES_MPI/
+ finished successfully
+ 
+Setting up input files (linking from ../input_files)
+Running with 4 processors
+Initializing folder
+Removing bin
+Removing MESH
+Removing true_model
+Removing initial_model
+Removing tomography_model_true.xyz
+Removing tomography_model_starting.xyz
+Removing ./DATA/
+Removing ./OUTPUT_FILES/
+Removing ./OUTPUT_FILES/DATABASES_MPI/
+Linking binaries
+Linking MESH
+Creating xyz files
+Running mesh partitioning
+Generating model from tomo model: tomography_model_true.xyz
+Moving model files to directory true_model/
+Copying Database files from ./OUTPUT_FILES/DATABASES_MPI/ to true_model/
+Generating model from tomo model: tomography_model_starting.xyz
+Moving model files to directory initial_model/
+Copying Database files from ./OUTPUT_FILES/DATABASES_MPI/ to initial_model/
+Setting parameter MODEL to value default
+Setting parameter SAVE_MESH_FILES to value .false.
+Linking python files
+Initializing folder
+Removing bin
+Removing MESH
+Removing true_model_seismograms
+Removing ./DATA/
+Removing ./OUTPUT_FILES/
+Removing ./OUTPUT_FILES/DATABASES_MPI/
+Linking binaries
+Linking MESH
+Setting up input data files
+Linking true-model tomgraphy (.xyz) file
+Linking mesh partitioning *Database files
+Generating true-model databases
+Simulating data for 9 events
+4 total processes killed (some possibly by mpirun.openmpi during cleanup)
+Setting parameter MODEL to value gll
+Setting parameter SAVE_MESH_FILES to value .false.
+Linking input directory parameters
+Initializing folder
+Removing bin
+Removing MESH
+Removing linked_data
+Removing linked_CMTSOLUTION_files
+Removing ./DATA/
+Removing ./OUTPUT_FILES/
+Removing ./OUTPUT_FILES/DATABASES_MPI/
+Removing /export/data/schiemenz/workflow_examples/toy_cube/inversion/event_scratch_directory/
+Removing L2_misfit
+Removing models_inversion
+Linking MESH
+Linking binary executables
+Linking data and CMTSOLUTION_files
+Linking initial model files and (constant) vs, rho, Database files
+Copying initial vp-model to models_inversion/m0
+Setting up input data files in directory ./DATA/
+By default, this is copying Par_file and STATIONS from directory ../input_files/
+Fri Nov 30 11:23:40 CET 2012
