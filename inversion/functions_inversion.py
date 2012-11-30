@@ -211,7 +211,6 @@ def simulation_loop(iteration,simtype='forward',save_forward=True):
         print "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" 
         inversion_home_directory=os.getcwd()
         event_dir = input_parameters.event_scratch_directory+'event'+str(event)+'/'
-        #if simtype=='forward': os.system('cp OUTPUT_FILES/DATABASES_MPI/*external*.bin ' + event_dir+'OUTPUT_FILES/DATABASES_MPI/') # schiemenz, take out later
         os.chdir(event_dir+'bin')
         os.system('mpirun.openmpi -np ' + str(input_parameters.NPROCS) + ' xspecfem3D')        
         os.chdir(inversion_home_directory) # back to root directory
