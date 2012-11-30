@@ -1,6 +1,5 @@
 echo `date` 
 
-# The entire workflow should take ~ 8 minutes on 4 processors
 # Assumes MESH has been created and placed in folder ./meshes/
 # Assumes that all specfem3D binaries have been placed in folder ./binary_files/
 
