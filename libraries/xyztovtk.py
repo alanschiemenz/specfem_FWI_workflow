@@ -1,5 +1,5 @@
 import numpy as np
-filename = 'tomography_model_true.xyz'
+filename = 'tomography_model.xyz'
 
 ftop = open(filename,'r')
 dummy = ftop.readline() # x,y,z min; x,y,z max
@@ -11,7 +11,7 @@ dummy = ftop.readline() # min/max vp, vs, rho
 ftop.close()
 
 
-f = open('fileout.vtk','w')
+f = open('tomography_model.vtk','w')
 f.write('# vtk DataFile Version 3.8.1\n')
 f.write('material model VTK file\n')
 f.write('ASCII\n')
@@ -27,7 +27,7 @@ for p in range(len(fin)):
 
 f.write('\n')
 f.write('POINT_DATA '+str(numpoints)+'\n')
-f.write('SCALARS param_c float 1\n')
+f.write('SCALARS Vp float 1\n')
 f.write('LOOKUP_TABLE default\n')
 
 for p in range(len(fin)):

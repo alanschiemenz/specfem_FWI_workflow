@@ -24,6 +24,10 @@ to wherever the workflow has been locally installed
 3. run the script 
 $ ./do_everything.sh
 
-4. run visualization scripts
-./inversion/visualization/plot_well_log.py    (plots a depth profile at (x,y) = (500,500))
-./inversion/visualization/create_vtks.py      (creates *.vtk files for the models for paraview visualization)
+
+VISUALIZATION ROUTINES
+./inversion/visualization/plot_well_log.py    -- plots a depth profile at (x,y) = (500,500)
+./inversion/visualization/create_vtks.py      -- creates *.vtk files for the models for paraview visualization
+./libraries/xyztovtk.py                       -- converts a tomographic model (.xyz file) into a .vtk file for paraview 
+
+
