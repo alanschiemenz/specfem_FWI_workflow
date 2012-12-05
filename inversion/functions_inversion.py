@@ -11,7 +11,9 @@ def link_setup():
     os.system('ln -s ../meshes/MESH .')
     print "Linking binary executables"
     os.system('mkdir bin')
-    os.system('ln -s ' + os.getcwd()+'/../binary_files/* bin/')
+    os.chdir('bin')
+    os.system('ln -s ../../binary_files/* .')
+    os.chdir('../')
     print "Linking data and CMTSOLUTION_files"
     os.system('mkdir linked_CMTSOLUTION_files linked_data')
     for enum in range(input_parameters.number_of_events):
