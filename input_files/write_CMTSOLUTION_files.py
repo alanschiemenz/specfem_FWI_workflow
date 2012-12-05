@@ -3,7 +3,7 @@ import os
 import sys
 
 
-num_events_1cable = 3
+num_events_1cable = 2
 num_events = num_events_1cable**2
 
 lo = np.linspace(250.0,750.0,num_events_1cable) # "longitude" (x)

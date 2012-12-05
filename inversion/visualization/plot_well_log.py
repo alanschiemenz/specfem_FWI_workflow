@@ -60,7 +60,7 @@ NPROC = len(xfiles)
 
 ll=[]
 models_toplot=['true_model']
-for mm in [0,1,2,3,4,5]:
+for mm in [0,2,4,6,8,10]:
     models_toplot.append('m'+str(mm))
 
 for model_dir in models_toplot:
@@ -86,6 +86,7 @@ for model_dir in models_toplot:
 plt.legend(ll)
 plt.xlabel('vp (m/s)')
 plt.ylabel('z (m)')
+plt.title('Well log at (x,y) = ('+str(x_coord)+','+str(y_coord)+')')
 print "Saving to file well_log.png"
 plt.savefig('well_log.png')
 plt.show()
