@@ -60,7 +60,7 @@ NPROC = len(xfiles)
 
 ll=[]
 models_toplot=['true_model']
-for mm in [0,3,6,9,10]:
+for mm in [0,1,2,3,4,5]:
     models_toplot.append('m'+str(mm))
 
 for model_dir in models_toplot:

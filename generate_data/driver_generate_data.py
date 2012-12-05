@@ -3,7 +3,7 @@ import functions_generate_data
 import os, pprocess
 
 NPROC = 4 # number of processors for 1 specfem simulation
-total_number_processors = 4 # total number of processors available
+total_number_processors = 36 # total number of processors available
 num_events = len(glob('../input_files/CMTSOLUTION_files/*'))
 output_data_directory = 'true_model_seismograms'
 

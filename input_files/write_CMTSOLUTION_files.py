@@ -6,8 +6,8 @@ import sys
 num_events_1cable = 3
 num_events = num_events_1cable**2
 
-lo = np.linspace(250.0,750.0,num_events_1cable)
-la = np.linspace(250.0,750.0,num_events_1cable)
+lo = np.linspace(250.0,750.0,num_events_1cable) # "longitude" (x)
+la = np.linspace(250.0,750.0,num_events_1cable) # "latitude" (y)
 #lo = np.linspace(250.0,2750.0,num_events_1cable)
 #la = np.linspace(250.0,2750.0,num_events_1cable)
 

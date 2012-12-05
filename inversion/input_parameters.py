@@ -1,7 +1,7 @@
 from glob import glob
 
 NPROCS=4 # number of processors used in 1 SPECFEM3D solve
-total_processors = 4 # total number of processors available 
+total_processors = 36 # total number of processors available 
 
 number_of_events=len(glob('../input_files/CMTSOLUTION_files/*'))
 zero_line = -1.0 # kernels are zeroed-out for z > zero_line (i.e. no model update there)
