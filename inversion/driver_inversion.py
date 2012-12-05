@@ -14,7 +14,6 @@ functions_inversion.setup_event_scratch_directory()
 functions_inversion.setup_SEM_list()
 functions_inversion.create_STATIONS_ADJOINT()
 
-sys.exit()
 for iteration in range(10):
     current_model_directory = os.getcwd()+'/models_inversion/m'+str(iteration)+'/'
 
